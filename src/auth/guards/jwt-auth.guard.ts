@@ -6,7 +6,7 @@ import { BadTokenException } from '../errors/bad-token-exception';
 export class JwtAuthGuard extends AuthGuard('jwt') {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     try {
-      super.canActivate(context);
+      await super.canActivate(context);
     } catch (e) {
       throw new BadTokenException();
     }
