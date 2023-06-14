@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from 'src/user/user.service';
 import { SignUpDto } from './dto/sign-up.dto';
@@ -13,6 +20,7 @@ export class AuthController {
   ) {}
 
   @Post('signup')
+  @HttpCode(200)
   async signup(@Body() signUpDto: SignUpDto) {
     const hashedPassword = await bcrypt.hash(signUpDto.password, 10);
     const user = await this.userService.createUser(hashedPassword);
@@ -23,6 +31,7 @@ export class AuthController {
   }
 
   @Post('signin')
+  @HttpCode(200)
   @UseGuards(LocalAuthGuard)
   async signin(@Request() req) {
     return {
